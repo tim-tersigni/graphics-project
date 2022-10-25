@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Maximum Player's speed
-    private float maxSpeed = 5f;
+    private float maxSpeed = 8f;
 
     // Start facing right 
     private bool facingRight = true;
