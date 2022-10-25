@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     // Maximum Player's speed
     private float maxSpeed = 8f;
 
+    // Player's jump height
+    private float jumpHeight = 1f;
+
     // Start facing right 
     private bool facingRight = true;
 
@@ -40,6 +43,14 @@ public class PlayerController : MonoBehaviour
             FlipHorizontal();
         else if (hInput < 0 && facingRight)
             FlipHorizontal();
+
+        
+        // Get vertical input
+        float vInput = Input.GetAxis("Vertical");
+
+        // Jump
+        if (vInput > 0 || Input.GetKeyDown(KeyCode.Space))
+            rigidBody.AddForce(new Vector2(0,jumpHeight), ForceMode2D.Impulse);
     }
 
     void FlipHorizontal()
