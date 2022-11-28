@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Are the player's feet touching something?
+    private bool isGrounded = true;
+
     // Maximum Player's speed
     private float maxSpeed = 8f;
-
-    // Player's jump height
-    private float jumpHeight = 1f;
 
     // Start facing right 
     private bool facingRight = true;
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
        // Get horizontal input
        float hInput = Input.GetAxis("Horizontal"); 
 
@@ -49,13 +50,31 @@ public class PlayerController : MonoBehaviour
         float vInput = Input.GetAxis("Vertical");
 
         // Jump
-        if (vInput > 0 || Input.GetKeyDown(KeyCode.Space))
-            rigidBody.AddForce(new Vector2(0,jumpHeight), ForceMode2D.Impulse);
+        if (isGrounded && vInput > 0 || Input.GetKeyDown(KeyCode.Space))
+            Jump();
     }
 
     void FlipHorizontal()
     {
         facingRight = !facingRight;
         animator.transform.Rotate(0, 180, 0);
+    }
+
+    void onCollisionEnter2D(Collision2D col) {
+        Debug.Log("Collision.");
+        // if circle collider, player is grounded
+        CircleCollider2D collider = col.otherCollider as CircleCollider2D;
+        if (col != null) {
+            Debug.Log("Set grounded.");
+            isGrounded = true;
+        }
+    }
+
+    void Jump() {
+        const float JumpForce = 6f;
+
+        rigidBody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+        // isGrounded = false;
+        Debug.Log ("Jumping");
     }
 }
