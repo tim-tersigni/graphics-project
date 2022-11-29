@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Are the player's feet touching something?
-    private bool isGrounded = true;
+    // // Are the player's feet touching something?
+    // private bool isGrounded = true;
 
     // Maximum Player's speed
     private float maxSpeed = 8f;
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (vInput > 0 || Input.GetKeyDown(KeyCode.Space))
            if (rigidBody.velocity.y == 0f) 
-                Jump();
+            StartCoroutine(Jump());
     }
 
     void FlipHorizontal()
@@ -71,11 +71,13 @@ public class PlayerController : MonoBehaviour
     //     }
     // }
 
-    void Jump() {
+    IEnumerator Jump() {
         const float JumpForce = 18f;
-
+        animator.SetBool("jumping", true);
         rigidBody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-        isGrounded = false;
+        // isGrounded = false;
         Debug.Log ("Jumping");
+        yield return new WaitForSeconds(0.1f);
+        animator.SetBool("jumping", false);
     }
 }
