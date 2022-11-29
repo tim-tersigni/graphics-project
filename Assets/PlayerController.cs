@@ -50,8 +50,9 @@ public class PlayerController : MonoBehaviour
         float vInput = Input.GetAxis("Vertical");
 
         // Jump
-        if (isGrounded && vInput > 0 || Input.GetKeyDown(KeyCode.Space))
-            Jump();
+        if (vInput > 0 || Input.GetKeyDown(KeyCode.Space))
+           if (rigidBody.velocity.y == 0f) 
+                Jump();
     }
 
     void FlipHorizontal()
@@ -60,21 +61,21 @@ public class PlayerController : MonoBehaviour
         animator.transform.Rotate(0, 180, 0);
     }
 
-    void onCollisionEnter2D(Collision2D col) {
-        Debug.Log("Collision.");
-        // if circle collider, player is grounded
-        CircleCollider2D collider = col.otherCollider as CircleCollider2D;
-        if (col != null) {
-            Debug.Log("Set grounded.");
-            isGrounded = true;
-        }
-    }
+    // void onCollisionEnter2D(Collision2D col) {
+    //     Debug.Log("Collision.");
+    //     // if circle collider, player is grounded
+    //     CircleCollider2D collider = col.otherCollider as CircleCollider2D;
+    //     if (col != null) {
+    //         Debug.Log("Set grounded.");
+    //         isGrounded = true;
+    //     }
+    // }
 
     void Jump() {
-        const float JumpForce = 6f;
+        const float JumpForce = 35f;
 
         rigidBody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-        // isGrounded = false;
+        isGrounded = false;
         Debug.Log ("Jumping");
     }
 }
