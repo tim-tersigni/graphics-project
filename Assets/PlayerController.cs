@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     // }
 
     void Jump() {
-        const float JumpForce = 35f;
+        const float JumpForce = 18f;
 
         rigidBody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
         isGrounded = false;
